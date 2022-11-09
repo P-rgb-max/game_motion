@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:game_motions/models/getx.dart';
 
 import '/lib.dart';
 import 'intents.dart';
@@ -6,7 +9,7 @@ import 'intents.dart';
 class GoLeftAction extends Action<GoLeftIntent> {
   @override
   Object? invoke(GoLeftIntent intent) {
-    sx = -20;
+    dx -= 20;
     print('helo');
 
     return null;
@@ -16,7 +19,7 @@ class GoLeftAction extends Action<GoLeftIntent> {
 class GoUpAction extends Action<GoUpIntent> {
   @override
   Object? invoke(GoUpIntent intent) {
-    sy = 10;
+    dy += 10;
     print('helo');
 
     return null;
@@ -26,7 +29,7 @@ class GoUpAction extends Action<GoUpIntent> {
 class GoRightAction extends Action<GoRightIntent> {
   @override
   Object? invoke(GoRightIntent intent) {
-    sx = 20;
+    dx += 20;
     print('helo');
 
     return null;
@@ -36,7 +39,7 @@ class GoRightAction extends Action<GoRightIntent> {
 class GoDownAction extends Action<GoDownIntent> {
   @override
   Object? invoke(GoDownIntent intent) {
-    sy = 5;
+    dy -= 5;
     print('helo');
 
     return null;
@@ -46,7 +49,14 @@ class GoDownAction extends Action<GoDownIntent> {
 class AAction extends Action<AIntent> {
   @override
   Object? invoke(AIntent intent) {
-    sx = -20;
+    // dy += 35;
+    // Timer(
+    //   const Duration(milliseconds: 200),
+    //   () => setGet(
+    //     () => dy -= 35,
+    //   ),
+    // );
+    sx = 20;
     print('helo');
 
     return null;

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_joystick/flutter_joystick.dart';
 import 'package:get/get.dart';
 
+import '/models/getx.dart';
 import '/models/shortcuts.dart';
 import '/lib.dart';
 
@@ -32,19 +33,23 @@ class _HomePageState extends State<HomePage> {
             dx += sx;
           }
           // Or if is smaller
-          if (dx < 0) {
-            dx = sx = 0;
+          if (dx <= 0) {
+            print('in if <0');
+            dx = 0;
+            sx = -sx;
+            print('sx is $sx');
           }
 
           // If Y is greater than background image height
-          if ((dy + 50) >= 50) {
+          if ((dy + 50) >= 20) {
             dy = 0;
           } else {
             dy += sy;
           }
           // Or if is smaller
-          if (dy < 0) {
-            dy = sy = 0;
+          if (dy <= 0) {
+            dy = 0;
+            sy = -sy;
           }
         },
       ),
@@ -60,7 +65,7 @@ class _HomePageState extends State<HomePage> {
         LogicalKeySet(LogicalKeyboardKey.arrowRight): GoIntent('right'),
         LogicalKeySet(LogicalKeyboardKey.arrowDown): GoIntent('down'),
         LogicalKeySet(LogicalKeyboardKey.keyZ): FunIntent('b'),
-        LogicalKeySet(LogicalKeyboardKey.keyX): GoIntent('a'),
+        LogicalKeySet(LogicalKeyboardKey.keyX): FunIntent('a'),
       },
       child: Actions(
         actions: {
@@ -72,23 +77,33 @@ class _HomePageState extends State<HomePage> {
           BIntent: BAction(),
         },
         child: Scaffold(
-          body: Stack(
-            children: [
-              Image.asset('assets/img/margolvls.jpeg'),
-              Positioned(
-                left: dx,
-                top: dy,
-                child: Image.asset(
-                  'assets/anim/maria_go.gif',
-                  width: 50,
+          body: SizedBox.expand(
+            child: Stack(
+              children: [
+                Image.asset(
+                  'assets/img/margolvls.jpeg',
+                  fit: BoxFit.cover,
                 ),
-              ),
-            ],
+                Obx(
+                  () {
+                    c.u.value;
+                    return Positioned(
+                      left: dx,
+                      top: dy,
+                      child: Image.asset(
+                        'assets/anim/maria_go.gif',
+                        width: 50,
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
-          floatingActionButton: GetPlatform.isDesktop
+          floatingActionButton: GetPlatform.isMobile
               ? Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
                   children: [
                     Container(
                       padding: const EdgeInsets.all(20),
@@ -112,20 +127,16 @@ class _HomePageState extends State<HomePage> {
                       child: Row(
                         children: [
                           FloatingActionButton(
-                            onPressed: Actions.handler(
-                                  context,
-                                  const BIntent(),
-                                ) ??
-                                () {},
+                            onPressed: () => BAction().invoke(
+                              const BIntent(),
+                            ),
                             child: const RetroText('B'),
                           ),
                           const SizedBox(width: 20),
                           FloatingActionButton(
-                            onPressed: Actions.handler(
-                                  context,
-                                  const AIntent(),
-                                ) ??
-                                () {},
+                            onPressed: () => AAction().invoke(
+                              const AIntent(),
+                            ),
                             child: const RetroText('A'),
                           ),
                         ],
