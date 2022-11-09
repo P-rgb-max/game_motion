@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.game_motions">
    <application
-        android:label="game_motions"
+        android:label="Goomla Run"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
